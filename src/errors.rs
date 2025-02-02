@@ -20,9 +20,14 @@ impl Display for AppError {
     }
 }
 
+impl std::error::Error for AppError {}
+
 impl AppError {
-    pub fn new(code: StatusCode, message: String) -> AppError {
-        AppError { code, message }
+    pub fn new(code: StatusCode, message: impl Display) -> AppError {
+        AppError {
+            code,
+            message: message.to_string(),
+        }
     }
 
     pub fn not_found() -> AppError {
@@ -32,33 +37,25 @@ impl AppError {
         }
     }
 
-    pub fn server_error(message: String) -> AppError {
+    pub fn server_error(message: impl Display) -> AppError {
         AppError {
             code: StatusCode::INTERNAL_SERVER_ERROR,
-            message,
+            message: message.to_string(),
         }
     }
 
-    pub fn bad_request(message: String) -> AppError {
+    pub fn bad_request(message: impl Display) -> AppError {
         AppError {
             code: StatusCode::BAD_REQUEST,
-            message,
+            message: message.to_string(),
         }
     }
 
     /// implementing this here instead of a trait fixes conflict issues
-    pub fn from(obj: impl Display) -> AppError {
+    pub fn from<T: Display>(obj: T) -> AppError {
         AppError {
             code: StatusCode::INTERNAL_SERVER_ERROR,
             message: obj.to_string(),
-        }
-    }
-
-    /// TODO: Think about not having this. I'm unsure of its value
-    pub fn from_code<T: Display>(code: StatusCode) -> impl Fn(T) -> AppError {
-        move |e| AppError {
-            code,
-            message: e.to_string(),
         }
     }
 }
@@ -106,5 +103,14 @@ mod tests {
     fn test_json() {
         let resp: JsonResult<String> = json_ok("hi".to_string());
         assert_eq!(resp.unwrap().to_string(), "hi");
+    }
+
+    #[test]
+    fn test_traits() {
+        assert_eq!(AppError::new(StatusCode::FORBIDDEN, "hi").message, "hi");
+        assert_eq!(
+            AppError::new(StatusCode::FORBIDDEN, "hi".to_string()).message,
+            "hi"
+        );
     }
 }
