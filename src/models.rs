@@ -1,3 +1,5 @@
+use std::fmt::Display;
+
 use serde::Serialize;
 use sqlx::PgPool;
 
@@ -27,6 +29,14 @@ impl StringLike for &str {
         self.to_string()
     }
 }
+
+/*
+impl<T: Display> StringLike for T {
+    fn to_str(self) -> String {
+        self.to_string()
+    }
+}
+*/
 
 impl SimpleResponse {
     pub fn new(value: impl StringLike) -> SimpleResponse {

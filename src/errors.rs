@@ -1,4 +1,4 @@
-#![allow(dead_code)] // This is a common file
+#![allow(dead_code)] // This is a common file that is vendored in my stuff.
 
 use std::fmt::Display;
 
