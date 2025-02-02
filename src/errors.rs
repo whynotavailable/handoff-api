@@ -52,7 +52,7 @@ impl AppError {
     }
 
     /// implementing this here instead of a trait fixes conflict issues
-    pub fn from<T: Display>(obj: T) -> AppError {
+    pub fn from(obj: impl Display) -> AppError {
         AppError {
             code: StatusCode::INTERNAL_SERVER_ERROR,
             message: obj.to_string(),

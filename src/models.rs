@@ -1,5 +1,3 @@
-use std::fmt::Display;
-
 use serde::Serialize;
 use sqlx::PgPool;
 
@@ -44,6 +42,14 @@ impl SimpleResponse {
             value: value.to_str(),
         }
     }
+
+    /*
+    pub fn new<T: StringLike>(value: T) -> SimpleResponse {
+        SimpleResponse {
+            value: value.to_str(),
+        }
+    }
+    */
 }
 
 #[derive(Serialize, Debug)]
