@@ -23,37 +23,37 @@ impl Display for AppError {
 impl std::error::Error for AppError {}
 
 impl AppError {
-    pub fn new(code: StatusCode, message: impl Display) -> AppError {
-        AppError {
+    pub fn new(code: StatusCode, message: impl ToString) -> Self {
+        Self {
             code,
             message: message.to_string(),
         }
     }
 
-    pub fn not_found() -> AppError {
-        AppError {
+    pub fn not_found() -> Self {
+        Self {
             code: StatusCode::NOT_FOUND,
             message: "Not Found".to_string(),
         }
     }
 
-    pub fn server_error(message: impl Display) -> AppError {
-        AppError {
+    pub fn server_error(message: impl ToString) -> Self {
+        Self {
             code: StatusCode::INTERNAL_SERVER_ERROR,
             message: message.to_string(),
         }
     }
 
-    pub fn bad_request(message: impl Display) -> AppError {
-        AppError {
+    pub fn bad_request(message: impl ToString) -> Self {
+        Self {
             code: StatusCode::BAD_REQUEST,
             message: message.to_string(),
         }
     }
 
     /// implementing this here instead of a trait fixes conflict issues
-    pub fn from(obj: impl Display) -> AppError {
-        AppError {
+    pub fn from(obj: impl ToString) -> Self {
+        Self {
             code: StatusCode::INTERNAL_SERVER_ERROR,
             message: obj.to_string(),
         }

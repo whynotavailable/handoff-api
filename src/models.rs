@@ -11,45 +11,12 @@ pub struct SimpleResponse {
     pub value: String,
 }
 
-// TODO: Remove this after talk and just use Display instead lol
-pub trait StringLike {
-    fn to_str(self) -> String;
-}
-
-impl StringLike for String {
-    fn to_str(self) -> String {
-        self
-    }
-}
-
-impl StringLike for &str {
-    fn to_str(self) -> String {
-        self.to_string()
-    }
-}
-
-/*
-impl<T: Display> StringLike for T {
-    fn to_str(self) -> String {
-        self.to_string()
-    }
-}
-*/
-
 impl SimpleResponse {
-    pub fn new(value: impl StringLike) -> SimpleResponse {
-        SimpleResponse {
-            value: value.to_str(),
+    pub fn new(value: impl ToString) -> Self {
+        Self {
+            value: value.to_string(),
         }
     }
-
-    /*
-    pub fn new<T: StringLike>(value: T) -> SimpleResponse {
-        SimpleResponse {
-            value: value.to_str(),
-        }
-    }
-    */
 }
 
 #[derive(Serialize, Debug)]
