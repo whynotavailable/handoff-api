@@ -1,9 +1,6 @@
+use crate::models::{AppState, SimpleResponse};
 use axum::{routing::get, Router};
-
-use crate::{
-    errors::{json_ok, JsonResult},
-    models::{AppState, SimpleResponse},
-};
+use whynot_errors::{json_ok, JsonResult};
 
 async fn status() -> JsonResult<SimpleResponse> {
     json_ok(SimpleResponse::new("Ok"))

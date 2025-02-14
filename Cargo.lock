@@ -516,6 +516,7 @@ dependencies = [
  "tower",
  "tower-http",
  "uuid",
+ "whynot-errors",
 ]
 
 [[package]]
@@ -2056,6 +2057,15 @@ checksum = "372d5b87f58ec45c384ba03563b03544dc5fadc3983e434b286913f5b4a9bb6d"
 dependencies = [
  "redox_syscall",
  "wasite",
+]
+
+[[package]]
+name = "whynot-errors"
+version = "0.1.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3b5a414489d70ea7e3315980a3f78411825d110519ed2b2920453294b55947e7"
+dependencies = [
+ "axum",
 ]
 
 [[package]]

@@ -1,10 +1,9 @@
-use crate::errors::AppError;
 use crate::models::AppState;
 use crate::routes::main::main_routes;
-use axum::handler::HandlerWithoutStateExt;
-use axum::Router;
+use axum::{handler::HandlerWithoutStateExt, Router};
 use machine::machine_routes;
 use tower_http::services::{ServeDir, ServeFile};
+use whynot_errors::AppError;
 
 mod machine;
 mod main;
